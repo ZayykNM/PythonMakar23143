@@ -1,0 +1,28 @@
+{% extends 'workouts/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <div class="card-modern">
+            <div class="text-center mb-4">
+                <i class="fa-solid fa-arrow-right-to-bracket fa-3x text-primary mb-3"></i>
+                <h2 class="fw-bold">Вход</h2>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                
+                <div class="d-grid gap-2 mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg">Войти</button>
+                </div>
+            </form>
+            
+            <div class="text-center mt-3">
+                <a href="{% url 'register' %}" class="text-muted text-decoration-none small">Нет аккаунта? Зарегистрироваться</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

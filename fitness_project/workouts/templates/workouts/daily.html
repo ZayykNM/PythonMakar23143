@@ -1,0 +1,42 @@
+{% extends 'workouts/base.html' %}
+
+{% block content %}
+<div class="text-center mb-4">
+    <h2 class="fw-bold">Ваша программа на сегодня ⚡</h2>
+    <p class="text-muted">Персональная подборка на основе вашего профиля</p>
+</div>
+
+{% if workouts %}
+    <div class="list-group">
+    {% for workout in workouts %}
+        <div class="list-group-item list-group-item-action flex-column align-items-start p-4 mb-3 shadow-sm border rounded">
+            <div class="d-flex w-100 justify-content-between">
+                <h4 class="mb-1 text-primary">{{ workout.title }}</h4>
+                <!-- Разные цвета для категорий -->
+                <small class="badge 
+                    {% if workout.category == 'cardio' %}bg-danger
+                    {% elif workout.category == 'strength' %}bg-dark
+                    {% else %}bg-success{% endif %} 
+                    rounded-pill">
+                    {{ workout.get_category_display }}
+                </small>
+            </div>
+            <p class="mb-1 mt-2 fs-5">{{ workout.description }}</p>
+        </div>
+    {% endfor %}
+    </div>
+
+    <div class="d-grid gap-2 mt-4">
+        <button onclick="location.reload();" class="btn btn-outline-primary btn-lg">
+            🔄 Сгенерировать другую тренировку
+        </button>
+    </div>
+
+{% else %}
+    <div class="alert alert-warning text-center" role="alert">
+        <h4>Пусто! 😔</h4>
+        <p>Мы не нашли упражнений по вашим фильтрам.</p>
+        <a href="{% url 'profile' %}" class="btn btn-warning">Изменить настройки профиля</a>
+    </div>
+{% endif %}
+{% endblock %}

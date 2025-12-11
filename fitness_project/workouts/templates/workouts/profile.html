@@ -1,0 +1,63 @@
+{% extends 'workouts/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card-modern">
+            <div class="d-flex align-items-center mb-4">
+                <div class="bg-light p-3 rounded-circle me-3">
+                    <i class="fa-solid fa-sliders fa-2x text-primary"></i>
+                </div>
+                <div>
+                    <h2 class="fw-bold m-0">Настройки</h2>
+                    <p class="text-muted m-0">Какие тренировки вам предлагать?</p>
+                </div>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+                
+                <!-- Рендерим форму вручную для красивых переключателей -->
+                <div class="mb-3">
+                    <div class="form-check form-switch p-3 bg-light rounded mb-2">
+                        {{ form.want_cardio }}
+                        <label class="form-check-label fw-bold ms-2" for="{{ form.want_cardio.id_for_label }}">
+                            🏃 Люблю Кардио
+                        </label>
+                    </div>
+                    
+                    <div class="form-check form-switch p-3 bg-light rounded mb-2">
+                        {{ form.want_strength }}
+                        <label class="form-check-label fw-bold ms-2" for="{{ form.want_strength.id_for_label }}">
+                            🏋️ Люблю Силовые
+                        </label>
+                    </div>
+
+                    <div class="form-check form-switch p-3 bg-light rounded mb-2">
+                        {{ form.want_yoga }}
+                        <label class="form-check-label fw-bold ms-2" for="{{ form.want_yoga.id_for_label }}">
+                            🧘 Люблю Йогу
+                        </label>
+                    </div>
+                </div>
+
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn btn-success btn-lg shadow-sm">
+                        <i class="fa-solid fa-check me-2"></i>Сохранить настройки
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Маленький скрипт, чтобы добавить класс form-check-input к галочкам -->
+<script>
+    document.querySelectorAll('input[type="checkbox"]').forEach(el => {
+        el.classList.add('form-check-input');
+        el.style.width = "3em";
+        el.style.height = "1.5em";
+    });
+</script>
+{% endblock %}

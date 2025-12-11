@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitnessTracker Pro</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Иконки FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Шрифт Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+        }
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .navbar-brand {
+            font-weight: 800;
+            color: #4F46E5 !important;
+            letter-spacing: -0.5px;
+        }
+        .card-modern {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            background: white;
+            padding: 2rem;
+        }
+        .btn-primary {
+            background-color: #4F46E5;
+            border: none;
+            padding: 10px 20px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #4338ca;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <i class="fa-solid fa-dumbbell me-2"></i>FITNESS PRO
+            </a>
+            <div class="d-flex align-items-center">
+                {% if user.is_authenticated %}
+                    <a class="btn btn-link text-decoration-none text-dark fw-bold me-3" href="{% url 'daily' %}">Тренировки</a>
+                    <a class="btn btn-link text-decoration-none text-dark me-3" href="{% url 'profile' %}">Профиль</a>
+                    <form action="{% url 'logout' %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3">Выйти</button>
+                    </form>
+                {% else %}
+                    <a class="nav-link fw-bold me-3" href="{% url 'login' %}">Войти</a>
+                    <a class="btn btn-primary text-white" href="{% url 'register' %}">Начать бесплатно</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 100px; padding-bottom: 50px;">
+        {% block content %}{% endblock %}
+    </div>
+
+</body>
+</html>
